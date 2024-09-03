@@ -3,7 +3,7 @@ import React, { useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import AppButton from "../../components/AppButton";
+import PrimaryButton from "../../components/PrimaryButton";
 import Page from "../../components/onboarding/Page";
 import PageIndicator from "../../components/onboarding/PageIndicator";
 import { onboarding } from "../../constants/data";
@@ -17,7 +17,7 @@ export default function Onboarding() {
   const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
 
   const navigateToNextPage = () => {
-    if (activePageIdx === 2) navigation.navigate("SignIn");
+    if (activePageIdx === 2) navigation.navigate("LogIn");
     else {
       ref.current?.setPage(activePageIdx + 1);
     }
@@ -53,7 +53,7 @@ export default function Onboarding() {
           activePageIdx={activePageIdx}
           containerStyle={{ alignSelf: "center", marginVertical: "auto" }}
         />
-        <AppButton
+        <PrimaryButton
           label={activePageIdx === 2 ? "Get Started" : "Next"}
           onPress={navigateToNextPage}
           containerStyle={{ marginBottom: "auto" }}

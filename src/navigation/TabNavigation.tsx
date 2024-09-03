@@ -5,11 +5,15 @@ import History from "../screens/History";
 import Home from "../screens/Home";
 import Profile from "../screens/Profile";
 import { TabParamList } from "../utils/navigation-types";
+import { colors } from "../constants/colors";
 
 const Tab = createBottomTabNavigator<TabParamList>();
 export default function TabNavigation() {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      screenOptions={{ headerShown: false }}
+      sceneContainerStyle={{ backgroundColor: colors.bg }}
+    >
       <Tab.Screen name="Home" component={Home} />
       <Tab.Screen name="Chat" component={Chat} />
       <Tab.Screen name="History" component={History} />

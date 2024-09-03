@@ -12,6 +12,6 @@ export type TabParamList = {
 
 export type AuthStackParamList = {
   Onboarding: undefined;
-  SignIn: undefined;
+  LogIn: undefined;
   SignUp: undefined;
 };

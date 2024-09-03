@@ -4,4 +4,5 @@ export const colors = {
   text: "#000000",
   textMuted: "#858585",
   bg_gray: "#e2e8f0",
+  input_bg: "#f7f9fb",
 };

@@ -11,9 +11,8 @@ import AuthForm from "../../components/auth/AuthForm";
 import AuthHeader from "../../components/auth/AuthHeader";
 import { defaultStyles } from "../../constants/styles";
 
-export default function SignUp() {
+export default function LogIn() {
   const { bottom } = useSafeAreaInsets();
-
   return (
     <KeyboardAvoidingView
       style={{ ...defaultStyles.flex1, paddingBottom: bottom }}
@@ -24,8 +23,8 @@ export default function SignUp() {
         accessible={false}
       >
         <View style={defaultStyles.flex1}>
-          <AuthHeader title="Create Your Account" />
-          <AuthForm screen="signup" />
+          <AuthHeader title="Welcome 👋" />
+          <AuthForm screen="login" />
         </View>
       </TouchableWithoutFeedback>
     </KeyboardAvoidingView>

@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Image,
   StyleProp,
   StyleSheet,
   Text,
@@ -8,25 +9,27 @@ import {
   ViewStyle,
 } from "react-native";
 import { colors } from "../constants/colors";
-import { defaultStyles } from "../constants/styles";
 
 interface Props {
   label: string;
   onPress?: () => void;
   containerStyle?: StyleProp<ViewStyle>;
   labelStyle?: StyleProp<TextStyle>;
+  iconLeft?: any;
 }
-export default function AppButton({
+export default function SecondaryButton({
   label,
   onPress,
   containerStyle,
   labelStyle,
+  iconLeft,
 }: Props) {
   return (
     <TouchableOpacity
-      style={[styles.container, defaultStyles.shadowLight, containerStyle]}
+      style={[styles.container, containerStyle]}
       onPress={onPress}
     >
+      {iconLeft && <Image source={iconLeft} style={styles.iconLeft} />}
       <Text style={[styles.label, labelStyle]}>{label}</Text>
     </TouchableOpacity>
   );
@@ -34,15 +37,23 @@ export default function AppButton({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.primary,
-    height: 56,
+    flexDirection: "row",
     alignItems: "center",
     justifyContent: "center",
+    gap: 10,
+    backgroundColor: "transparent",
+    height: 56,
     borderRadius: 40,
+    borderWidth: 0.5,
+    borderColor: colors.text,
   },
   label: {
-    color: colors.bg,
-    fontFamily: "Jakarta-SemiBold",
+    color: colors.text,
+    fontFamily: "Jakarta-Medium",
     fontSize: 18,
+  },
+  iconLeft: {
+    width: 22,
+    height: 22,
   },
 });
