@@ -3,4 +3,5 @@ export const images = {
   onboarding2: require("../../assets/images/onboarding2.png"),
   onboarding3: require("../../assets/images/onboarding3.png"),
   signUpCar: require("../../assets/images/signup-car.png"),
+  check: require("../../assets/images/check.png"),
 };

@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { colors } from "../constants/colors";
 import { defaultStyles } from "../constants/styles";
+import { appButtonHeight } from "../constants/sizes";
 
 interface Props {
   label: string;
@@ -43,13 +44,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 10,
     backgroundColor: colors.primary,
-    height: 54,
+    height: appButtonHeight,
     borderRadius: 40,
   },
   label: {
     color: colors.bg,
     fontFamily: "Jakarta-SemiBold",
     fontSize: 18,
+    lineHeight: 21,
   },
   iconLeft: {
     width: 24,

@@ -1,10 +1,10 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import React from "react";
-import Onboarding from "../screens/auth/Onboarding";
+import { colors } from "../constants/colors";
 import LogIn from "../screens/auth/LogIn";
+import Onboarding from "../screens/auth/Onboarding";
 import SignUp from "../screens/auth/SignUp";
 import { AuthStackParamList } from "../utils/navigation-types";
-import { colors } from "../constants/colors";
 
 const Stack = createNativeStackNavigator<AuthStackParamList>();
 export default function AuthStackNavigation() {

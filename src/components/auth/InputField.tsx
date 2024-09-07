@@ -13,11 +13,13 @@ import {
 } from "react-native";
 import { colors } from "../../constants/colors";
 import { icons } from "../../constants/icons";
+
 interface Props extends TextInputProps {
   label: string;
   value: string;
   iconLeft: any;
   password?: boolean;
+  clearText: () => void;
   inputContainerStyle?: StyleProp<ViewStyle>;
   containerStyle?: StyleProp<ViewStyle>;
 }
@@ -25,7 +27,8 @@ export default function InputField({
   label,
   value,
   iconLeft,
-  password,
+  password = false,
+  clearText,
   containerStyle,
   inputContainerStyle,
   ...props
@@ -66,15 +69,22 @@ export default function InputField({
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           secureTextEntry={password && !showPassword}
+          autoCorrect={false}
           {...props}
         />
-        <TouchableOpacity
-          disabled={!password}
-          style={styles.showPasswordBtn}
-          onPress={() => setShowPassword((prevState) => !prevState)}
-        >
-          {renderShowPasswordIcon()}
-        </TouchableOpacity>
+        {value.length > 0 && isFocused && (
+          <TouchableOpacity style={styles.inputBtnLeft} onPress={clearText}>
+            <AntDesign name="closecircle" size={20} color={colors.textMuted} />
+          </TouchableOpacity>
+        )}
+        {password && (
+          <TouchableOpacity
+            style={styles.inputBtnLeft}
+            onPress={() => setShowPassword((prevState) => !prevState)}
+          >
+            {renderShowPasswordIcon()}
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   );
@@ -95,7 +105,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.input_bg,
     height: 52,
-    paddingLeft: 14,
+    paddingHorizontal: 14,
   },
   icon: {
     width: 24,
@@ -108,11 +118,11 @@ const styles = StyleSheet.create({
     fontFamily: "Jakarta-Medium",
     fontSize: 16,
     marginLeft: 10,
+    marginRight: 4,
   },
-  showPasswordBtn: {
+  inputBtnLeft: {
     height: "100%",
-    paddingRight: 20,
-    paddingLeft: 10,
+    width: 34,
     justifyContent: "center",
     alignItems: "center",
   },

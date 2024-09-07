@@ -5,4 +5,6 @@ export const colors = {
   textMuted: "#858585",
   bg_gray: "#e2e8f0",
   input_bg: "#f7f9fb",
+  success: "#41ae6d",
+  error: "#ef4444",
 };

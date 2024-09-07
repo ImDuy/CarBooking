@@ -27,3 +27,9 @@ export type Ride = {
     car_seats: number;
   };
 };
+
+export type AuthFormInfo = {
+  name: string;
+  email: string;
+  password: string;
+};

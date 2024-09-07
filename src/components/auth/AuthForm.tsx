@@ -7,11 +7,18 @@ import SecondaryButton from "../SecondaryButton";
 import AuthDivider from "./AuthDivider";
 import FormFooter from "./FormFooter";
 import InputField from "./InputField";
+import { AuthFormInfo } from "../../utils/types";
 
 interface Props {
   screen: "login" | "signup";
+  onPrimaryBtnPress: (form: AuthFormInfo) => void;
+  onLoginWithGoogle?: () => void;
 }
-export default function AuthForm({ screen }: Props) {
+export default function AuthForm({
+  screen,
+  onPrimaryBtnPress,
+  onLoginWithGoogle,
+}: Props) {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
 
   return (
@@ -21,32 +28,46 @@ export default function AuthForm({ screen }: Props) {
           label="Name"
           value={form.name}
           placeholder="Enter name"
+          autoCapitalize="words"
           iconLeft={icons.person}
           containerStyle={styles.mb}
-          onChangeText={(name: string) => setForm({ ...form, name })}
+          onChangeText={(name: string) =>
+            setForm((prevForm) => ({ ...prevForm, name }))
+          }
+          clearText={() => setForm((prevForm) => ({ ...prevForm, name: "" }))}
         />
       )}
       <InputField
         label="Email"
         value={form.email}
         placeholder="Enter email"
+        autoCapitalize="none"
+        autoComplete="email"
         iconLeft={icons.email}
         containerStyle={styles.mb}
-        onChangeText={(email: string) => setForm({ ...form, email })}
+        onChangeText={(email: string) =>
+          setForm((prevForm) => ({ ...prevForm, email }))
+        }
+        clearText={() => setForm((prevForm) => ({ ...prevForm, email: "" }))}
       />
       <InputField
+        password
         label="Password"
         value={form.password}
         placeholder="Enter password"
+        autoCapitalize="none"
         iconLeft={icons.lock}
         containerStyle={styles.mb}
-        onChangeText={(password: string) => setForm({ ...form, password })}
-        password
+        onChangeText={(password: string) =>
+          setForm((prevForm) => ({ ...prevForm, password }))
+        }
+        clearText={() => setForm((prevForm) => ({ ...prevForm, password: "" }))}
       />
 
       <PrimaryButton
         label={screen === "login" ? "Log In" : "Sign Up"}
         containerStyle={styles.mt}
+        onPress={() => onPrimaryBtnPress(form)}
       />
       {screen === "login" && (
         <>
@@ -54,6 +75,7 @@ export default function AuthForm({ screen }: Props) {
           <SecondaryButton
             label="Continue with Google"
             iconLeft={icons.google}
+            onPress={onLoginWithGoogle}
           />
         </>
       )}

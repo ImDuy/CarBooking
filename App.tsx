@@ -4,9 +4,17 @@ import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
 import RootStackNavigation from "./src/navigation/RootStackNavigation";
+import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
+import { tokenCache } from "./src/utils/clerk-auth";
+
+const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
+if (!publishableKey) {
+  throw new Error(
+    "Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env"
+  );
+}
 
 SplashScreen.preventAutoHideAsync();
-
 export default function App() {
   const [loaded, error] = useFonts({
     "Jakarta-Bold": require("./assets/fonts/PlusJakartaSans-Bold.ttf"),
@@ -27,12 +35,17 @@ export default function App() {
   if (!loaded && !error) {
     return null;
   }
+
   return (
     <>
       <StatusBar style="auto" />
-      <NavigationContainer>
-        <RootStackNavigation />
-      </NavigationContainer>
+      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
+        <ClerkLoaded>
+          <NavigationContainer>
+            <RootStackNavigation />
+          </NavigationContainer>
+        </ClerkLoaded>
+      </ClerkProvider>
     </>
   );
 }

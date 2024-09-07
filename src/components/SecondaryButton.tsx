@@ -9,6 +9,7 @@ import {
   ViewStyle,
 } from "react-native";
 import { colors } from "../constants/colors";
+import { appButtonHeight } from "../constants/sizes";
 
 interface Props {
   label: string;
@@ -42,7 +43,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 10,
     backgroundColor: "transparent",
-    height: 56,
+    height: appButtonHeight,
     borderRadius: 40,
     borderWidth: 0.5,
     borderColor: colors.text,
