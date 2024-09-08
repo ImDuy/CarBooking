@@ -4,6 +4,9 @@ import Modal, { ModalProps } from "react-native-modal";
 import { colors } from "../../constants/colors";
 import { images } from "../../constants/images";
 import PrimaryButton from "../PrimaryButton";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store/store";
+import LoadingOverlay from "../LoadingOverlay";
 
 interface Props extends Partial<ModalProps> {
   onBrowseHome: () => void;
@@ -12,6 +15,7 @@ export default function AccountVerifiedModal({
   onBrowseHome,
   ...modalProps
 }: Props) {
+  const isLoading = useSelector((state: RootState) => state.app.isLoading);
   return (
     <Modal
       useNativeDriverForBackdrop
@@ -29,6 +33,7 @@ export default function AccountVerifiedModal({
           onPress={onBrowseHome}
           containerStyle={styles.browseHomeBtn}
         />
+        {isLoading && <LoadingOverlay />}
       </View>
     </Modal>
   );

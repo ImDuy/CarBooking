@@ -7,10 +7,13 @@ import AuthHeader from "../../components/auth/AuthHeader";
 import KeyboardDismissView from "../../components/KeyboardDismissView";
 import { defaultStyles } from "../../constants/styles";
 import { AuthFormInfo } from "../../utils/types";
+import { useDispatch } from "react-redux";
+import { setIsLoading } from "../../store/appSlice";
 
 export default function LogIn() {
   const { bottom } = useSafeAreaInsets();
   const { signIn, setActive, isLoaded } = useSignIn();
+  const dispatch = useDispatch();
 
   const onSignInPress = useCallback(
     async (loginForm: AuthFormInfo) => {
@@ -18,6 +21,7 @@ export default function LogIn() {
         return;
       }
 
+      dispatch(setIsLoading(true));
       try {
         const signInAttempt = await signIn.create({
           identifier: loginForm.email,
@@ -33,9 +37,11 @@ export default function LogIn() {
         }
       } catch (err: any) {
         Alert.alert("Error", err.errors[0].longMessage);
+      } finally {
+        dispatch(setIsLoading(false));
       }
     },
-    [isLoaded, setActive, signIn]
+    [isLoaded, setActive, signIn, dispatch]
   );
 
   return (

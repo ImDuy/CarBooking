@@ -6,6 +6,8 @@ import { useEffect } from "react";
 import RootStackNavigation from "./src/navigation/RootStackNavigation";
 import { ClerkLoaded, ClerkProvider } from "@clerk/clerk-expo";
 import { tokenCache } from "./src/utils/clerk-auth";
+import { Provider } from "react-redux";
+import { store } from "./src/store/store";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 if (!publishableKey) {
@@ -41,9 +43,11 @@ export default function App() {
       <StatusBar style="auto" />
       <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
         <ClerkLoaded>
-          <NavigationContainer>
-            <RootStackNavigation />
-          </NavigationContainer>
+          <Provider store={store}>
+            <NavigationContainer>
+              <RootStackNavigation />
+            </NavigationContainer>
+          </Provider>
         </ClerkLoaded>
       </ClerkProvider>
     </>

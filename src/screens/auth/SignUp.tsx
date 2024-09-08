@@ -9,6 +9,8 @@ import PendingVerificationModal from "../../components/auth/PendingVerificationM
 import KeyboardDismissView from "../../components/KeyboardDismissView";
 import { defaultStyles } from "../../constants/styles";
 import { AuthFormInfo } from "../../utils/types";
+import { useDispatch } from "react-redux";
+import { setIsLoading } from "../../store/appSlice";
 
 type Verification = {
   state: string;
@@ -21,6 +23,7 @@ export default function SignUp() {
   const { bottom } = useSafeAreaInsets();
   const { isLoaded, signUp, setActive } = useSignUp();
   const { signOut } = useClerk();
+  const dispatch = useDispatch();
   const [verification, setVerification] = useState<Verification>({
     state: "",
     code: "",
@@ -32,6 +35,7 @@ export default function SignUp() {
   const onSignUpPress = async (signUpForm: AuthFormInfo) => {
     if (!isLoaded) return;
 
+    dispatch(setIsLoading(true));
     try {
       await signUp.create({
         emailAddress: signUpForm.email,
@@ -39,11 +43,12 @@ export default function SignUp() {
       });
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-
+      dispatch(setIsLoading(false));
       setVerification((prevState) => ({ ...prevState, state: "pending" }));
     } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
+      dispatch(setIsLoading(false));
       Alert.alert("Error", err.errors[0].longMessage);
     }
   };
@@ -51,11 +56,12 @@ export default function SignUp() {
   const onPressVerify = async () => {
     if (!isLoaded) return;
 
+    dispatch(setIsLoading(true));
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code: verification.code,
       });
-
+      dispatch(setIsLoading(false));
       if (completeSignUp.status === "complete") {
         // TODO: create user in database
 
@@ -74,6 +80,7 @@ export default function SignUp() {
     } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
+      dispatch(setIsLoading(false));
       setVerification((prevState) => ({
         ...prevState,
         error: err.errors[0].longMessage,

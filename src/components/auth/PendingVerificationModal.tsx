@@ -7,6 +7,9 @@ import { icons } from "../../constants/icons";
 import KeyboardDismissView from "../KeyboardDismissView";
 import PrimaryButton from "../PrimaryButton";
 import InputField from "./InputField";
+import { RootState } from "../../store/store";
+import { useSelector } from "react-redux";
+import LoadingOverlay from "../LoadingOverlay";
 
 interface Props extends Partial<ModalProps> {
   code: string;
@@ -25,6 +28,8 @@ export default function PendingVerificationModal({
   ...modalProps
 }: Props) {
   const { bottom, top } = useSafeAreaInsets();
+  const isLoading = useSelector((state: RootState) => state.app.isLoading);
+
   return (
     <Modal
       useNativeDriverForBackdrop
@@ -56,6 +61,7 @@ export default function PendingVerificationModal({
           onPress={onVerifyPress}
           containerStyle={styles.verifyBtn}
         />
+        {isLoading && <LoadingOverlay />}
       </KeyboardDismissView>
     </Modal>
   );
