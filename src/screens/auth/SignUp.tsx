@@ -1,99 +1,61 @@
-import { useClerk, useSignUp } from "@clerk/clerk-expo";
+import { useClerk } from "@clerk/clerk-expo";
 import React, { useState } from "react";
-import { Alert, Keyboard, KeyboardAvoidingView, Platform } from "react-native";
+import { Keyboard, KeyboardAvoidingView, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import AccountVerifiedModal from "../../components/auth/AccountVerifiedModal";
+import SuccessModal from "../../components/auth/SuccessModal";
 import AuthForm from "../../components/auth/AuthForm";
 import AuthHeader from "../../components/auth/AuthHeader";
 import PendingVerificationModal from "../../components/auth/PendingVerificationModal";
 import KeyboardDismissView from "../../components/KeyboardDismissView";
 import { defaultStyles } from "../../constants/styles";
+import useClerkSignUp from "../../hooks/auth/useClerkSignUp";
 import { AuthFormInfo } from "../../utils/types";
-import { useDispatch } from "react-redux";
-import { setIsLoading } from "../../store/appSlice";
-
-type Verification = {
-  state: string;
-  code: string;
-  error: string;
-  signInSessionId: string | null;
-};
 
 export default function SignUp() {
   const { bottom } = useSafeAreaInsets();
-  const { isLoaded, signUp, setActive } = useSignUp();
+  const {
+    clerkSignUp,
+    clerkVerification,
+    verification,
+    setVerification,
+    setSessionActive,
+  } = useClerkSignUp();
   const { signOut } = useClerk();
-  const dispatch = useDispatch();
-  const [verification, setVerification] = useState<Verification>({
-    state: "",
-    code: "",
-    error: "",
-    signInSessionId: null,
-  });
   const [showSuccessModal, setShowSuccessModal] = useState(false);
 
   const onSignUpPress = async (signUpForm: AuthFormInfo) => {
-    if (!isLoaded) return;
-
-    dispatch(setIsLoading(true));
-    try {
-      await signUp.create({
-        emailAddress: signUpForm.email,
-        password: signUpForm.password,
-      });
-
-      await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
-      dispatch(setIsLoading(false));
-      setVerification((prevState) => ({ ...prevState, state: "pending" }));
-    } catch (err: any) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
-      dispatch(setIsLoading(false));
-      Alert.alert("Error", err.errors[0].longMessage);
-    }
+    clerkSignUp(signUpForm);
   };
 
   const onPressVerify = async () => {
-    if (!isLoaded) return;
-
-    dispatch(setIsLoading(true));
-    try {
-      const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code: verification.code,
-      });
-      dispatch(setIsLoading(false));
-      if (completeSignUp.status === "complete") {
-        // TODO: create user in database
-
-        setVerification((prevState) => ({
-          ...prevState,
-          state: "success",
-          signInSessionId: completeSignUp.createdSessionId,
-        }));
-      } else {
-        setVerification((prevState) => ({
-          ...prevState,
-          // state: "failed",
-          error: "Verification failed",
-        }));
-      }
-    } catch (err: any) {
-      // See https://clerk.com/docs/custom-flows/error-handling
-      // for more info on error handling
-      dispatch(setIsLoading(false));
-      setVerification((prevState) => ({
-        ...prevState,
-        error: err.errors[0].longMessage,
-      }));
-    }
+    clerkVerification();
   };
 
   const handleBrowseHome = async () => {
     setVerification({ state: "", code: "", error: "", signInSessionId: null });
     setShowSuccessModal(false);
-    setActive !== undefined &&
-      setActive({ session: verification.signInSessionId });
-    // navigation.navigate("TabNavigation", { screen: "Home" });
+    setSessionActive();
+  };
+
+  const onPendingModalBackdropPress = () => {
+    if (Keyboard.isVisible()) Keyboard.dismiss();
+    else
+      setVerification((prevState) => ({
+        ...prevState,
+        state: "",
+        code: "",
+        error: "",
+      }));
+  };
+  const onSuccessModalBackdropPress = () => {
+    setVerification({
+      state: "",
+      code: "",
+      error: "",
+      signInSessionId: null,
+    });
+    setShowSuccessModal(false);
+    signOut();
   };
 
   return (
@@ -104,20 +66,6 @@ export default function SignUp() {
       <KeyboardDismissView containerStyle={defaultStyles.flex1}>
         <AuthHeader title="Create Your Account" />
         <AuthForm screen="signup" onPrimaryBtnPress={onSignUpPress} />
-        <AccountVerifiedModal
-          isVisible={showSuccessModal}
-          onBackdropPress={() => {
-            setVerification({
-              state: "",
-              code: "",
-              error: "",
-              signInSessionId: null,
-            });
-            setShowSuccessModal(false);
-            signOut();
-          }}
-          onBrowseHome={handleBrowseHome}
-        />
         <PendingVerificationModal
           isVisible={verification.state === "pending"}
           code={verification.code}
@@ -133,19 +81,15 @@ export default function SignUp() {
               code: "",
             }))
           }
-          onBackdropPress={() => {
-            if (Keyboard.isVisible()) Keyboard.dismiss();
-            else
-              setVerification((prevState) => ({
-                ...prevState,
-                state: "",
-                code: "",
-                error: "",
-              }));
-          }}
+          onBackdropPress={onPendingModalBackdropPress}
           onModalHide={() => {
             if (verification.state === "success") setShowSuccessModal(true);
           }}
+        />
+        <SuccessModal
+          isVisible={showSuccessModal}
+          onBackdropPress={onSuccessModalBackdropPress}
+          onBrowseHome={handleBrowseHome}
         />
       </KeyboardDismissView>
     </KeyboardAvoidingView>

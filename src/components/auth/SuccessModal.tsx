@@ -11,10 +11,7 @@ import LoadingOverlay from "../LoadingOverlay";
 interface Props extends Partial<ModalProps> {
   onBrowseHome: () => void;
 }
-export default function AccountVerifiedModal({
-  onBrowseHome,
-  ...modalProps
-}: Props) {
+export default function SuccessModal({ onBrowseHome, ...modalProps }: Props) {
   const isLoading = useSelector((state: RootState) => state.app.isLoading);
   return (
     <Modal

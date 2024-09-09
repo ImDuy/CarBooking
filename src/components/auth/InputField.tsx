@@ -94,7 +94,7 @@ const styles = StyleSheet.create({
   label: {
     color: colors.text,
     fontFamily: "Jakarta-SemiBold",
-    fontSize: 18,
+    fontSize: 17,
     marginBottom: 3,
   },
   inputContainer: {
