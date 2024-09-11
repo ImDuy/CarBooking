@@ -2,6 +2,7 @@
   "expo": {
     "name": "CarBooking",
     "slug": "CarBooking",
+    "scheme": "CarBooking",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -23,10 +24,18 @@
       "package": "com.imduy.CarBooking"
     },
     "web": {
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/favicon.png",
+      "bundler": "metro",
+      "output": "server"
     },
     "plugins": [
-      "expo-font"
+      [
+        "expo-font",
+        {
+          "origin": "https://carbooking.dev/"
+        }
+      ],
+      "expo-router"
     ]
   }
 }

@@ -4,19 +4,19 @@ import { useDispatch } from "react-redux";
 import { AuthFormInfo } from "../../utils/types";
 import { setIsLoading } from "../../store/appSlice";
 import { Alert } from "react-native";
+import { fetchAPI } from "../api/useFetchAPI";
 
 type Verification = {
   state: string;
-  code: string;
   error: string;
   signInSessionId: string | null;
 };
 export default function useClerkSignUp() {
   const { isLoaded, signUp, setActive } = useSignUp();
   const dispatch = useDispatch();
+  const [userInfo, setUserInfo] = useState<AuthFormInfo>();
   const [verification, setVerification] = useState<Verification>({
     state: "",
-    code: "",
     error: "",
     signInSessionId: null,
   });
@@ -33,6 +33,7 @@ export default function useClerkSignUp() {
 
       await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
       dispatch(setIsLoading(false));
+      setUserInfo(signUpForm);
       setVerification((prevState) => ({ ...prevState, state: "pending" }));
     } catch (err: any) {
       // See https://clerk.com/docs/custom-flows/error-handling
@@ -42,17 +43,25 @@ export default function useClerkSignUp() {
     }
   };
 
-  const clerkVerification = async () => {
+  const clerkVerification = async (code: string) => {
     if (!isLoaded) return;
 
     dispatch(setIsLoading(true));
     try {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
-        code: verification.code,
+        code,
       });
       dispatch(setIsLoading(false));
       if (completeSignUp.status === "complete") {
-        // TODO: create user in database
+        // create user in database
+        await fetchAPI("/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: userInfo?.name,
+            email: userInfo?.email,
+            clerkId: completeSignUp.id,
+          }),
+        });
 
         setVerification((prevState) => ({
           ...prevState,
@@ -69,10 +78,15 @@ export default function useClerkSignUp() {
       // See https://clerk.com/docs/custom-flows/error-handling
       // for more info on error handling
       dispatch(setIsLoading(false));
-      setVerification((prevState) => ({
-        ...prevState,
-        error: err.errors[0].longMessage,
-      }));
+
+      if (err instanceof TypeError) {
+        console.log(typeof err);
+      } else {
+        setVerification((prevState) => ({
+          ...prevState,
+          error: err?.errors[0]?.longMessage,
+        }));
+      }
     }
   };
 
@@ -84,11 +98,16 @@ export default function useClerkSignUp() {
     dispatch(setIsLoading(false));
   };
 
+  const clearSignUpData = () => {
+    setUserInfo(undefined);
+    setVerification({ state: "", error: "", signInSessionId: null });
+  };
+
   return {
     clerkSignUp,
     clerkVerification,
     verification,
-    setVerification,
     setSessionActive,
+    clearSignUpData,
   };
 }

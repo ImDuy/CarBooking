@@ -17,8 +17,8 @@ export default function SignUp() {
     clerkSignUp,
     clerkVerification,
     verification,
-    setVerification,
     setSessionActive,
+    clearSignUpData,
   } = useClerkSignUp();
   const { signOut } = useClerk();
   const [showSuccessModal, setShowSuccessModal] = useState(false);
@@ -27,33 +27,22 @@ export default function SignUp() {
     clerkSignUp(signUpForm);
   };
 
-  const onPressVerify = async () => {
-    clerkVerification();
+  const onPressVerify = async (code: string) => {
+    clerkVerification(code);
   };
 
   const handleBrowseHome = async () => {
-    setVerification({ state: "", code: "", error: "", signInSessionId: null });
+    clearSignUpData();
     setShowSuccessModal(false);
     setSessionActive();
   };
 
   const onPendingModalBackdropPress = () => {
     if (Keyboard.isVisible()) Keyboard.dismiss();
-    else
-      setVerification((prevState) => ({
-        ...prevState,
-        state: "",
-        code: "",
-        error: "",
-      }));
+    else clearSignUpData();
   };
   const onSuccessModalBackdropPress = () => {
-    setVerification({
-      state: "",
-      code: "",
-      error: "",
-      signInSessionId: null,
-    });
+    clearSignUpData();
     setShowSuccessModal(false);
     signOut();
   };
@@ -68,19 +57,8 @@ export default function SignUp() {
         <AuthForm screen="signup" onPrimaryBtnPress={onSignUpPress} />
         <PendingVerificationModal
           isVisible={verification.state === "pending"}
-          code={verification.code}
           error={verification.error}
           onVerifyPress={onPressVerify}
-          onChangeCodeInput={(code) =>
-            setVerification((prevState) => ({ ...prevState, error: "", code }))
-          }
-          onClearCodeInput={() =>
-            setVerification((prevState) => ({
-              ...prevState,
-              error: "",
-              code: "",
-            }))
-          }
           onBackdropPress={onPendingModalBackdropPress}
           onModalHide={() => {
             if (verification.state === "success") setShowSuccessModal(true);

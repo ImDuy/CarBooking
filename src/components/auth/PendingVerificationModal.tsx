@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text } from "react-native";
 import Modal, { ModalProps } from "react-native-modal";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -12,23 +12,25 @@ import { useSelector } from "react-redux";
 import LoadingOverlay from "../LoadingOverlay";
 
 interface Props extends Partial<ModalProps> {
-  code: string;
   error: string;
-  onChangeCodeInput: (code: string) => void;
-  onClearCodeInput: () => void;
-  onVerifyPress: () => void;
+  onVerifyPress: (code: string) => void;
 }
 
 export default function PendingVerificationModal({
-  code,
   error,
-  onChangeCodeInput,
-  onClearCodeInput,
   onVerifyPress,
   ...modalProps
 }: Props) {
   const { bottom, top } = useSafeAreaInsets();
   const isLoading = useSelector((state: RootState) => state.app.isLoading);
+  const [verificationCode, setVerificationCode] = useState("");
+
+  const onChangeCodeInput = (code: string) => {
+    setVerificationCode(code);
+  };
+  const onClearCodeInput = () => {
+    setVerificationCode("");
+  };
 
   return (
     <Modal
@@ -46,7 +48,7 @@ export default function PendingVerificationModal({
         </Text>
         <InputField
           label="Code"
-          value={code}
+          value={verificationCode}
           iconLeft={icons.lock}
           placeholder="123456"
           keyboardType="numeric"
@@ -58,7 +60,7 @@ export default function PendingVerificationModal({
         {error && <Text style={styles.errorText}>{error}</Text>}
         <PrimaryButton
           label="Verify Email"
-          onPress={onVerifyPress}
+          onPress={() => onVerifyPress(verificationCode)}
           containerStyle={styles.verifyBtn}
         />
         {isLoading && <LoadingOverlay />}
