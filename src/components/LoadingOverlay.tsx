@@ -10,13 +10,13 @@ import Animated, {
 } from "react-native-reanimated";
 interface Props {
   size?: number;
-  color?: string;
+  spinnerColor?: string;
   containerStyle?: StyleProp<ViewStyle>;
 }
 
 export default function LoadingOverlay({
   size = 36,
-  color = "white",
+  spinnerColor = "white",
   containerStyle,
 }: Props) {
   const rotation = useSharedValue(0);
@@ -34,7 +34,7 @@ export default function LoadingOverlay({
   return (
     <View style={[style.container, containerStyle]}>
       <Animated.View style={animatedStyle}>
-        <AntDesign name="loading2" size={size} color={color} />
+        <AntDesign name="loading2" size={size} color={spinnerColor} />
       </Animated.View>
     </View>
   );

@@ -9,7 +9,6 @@ import { fetchAPI } from "../api/useFetchAPI";
 type Verification = {
   state: string;
   error: string;
-  signInSessionId: string | null;
 };
 export default function useClerkSignUp() {
   const { isLoaded, signUp, setActive } = useSignUp();
@@ -18,7 +17,6 @@ export default function useClerkSignUp() {
   const [verification, setVerification] = useState<Verification>({
     state: "",
     error: "",
-    signInSessionId: null,
   });
 
   const clerkSignUp = async (signUpForm: AuthFormInfo) => {
@@ -54,15 +52,16 @@ export default function useClerkSignUp() {
       dispatch(setIsLoading(false));
       if (completeSignUp.status === "complete") {
         // create user in database
-        await fetchAPI("/user", {
-          method: "POST",
-          body: JSON.stringify({
-            name: userInfo?.name,
-            email: userInfo?.email,
-            clerkId: completeSignUp.id,
-          }),
-        });
+        // await fetchAPI("/user", {
+        //   method: "POST",
+        //   body: JSON.stringify({
+        //     name: userInfo?.name,
+        //     email: userInfo?.email,
+        //     clerkId: completeSignUp.id,
+        //   }),
+        // });
 
+        await setActive({ session: completeSignUp.createdSessionId });
         setVerification((prevState) => ({
           ...prevState,
           state: "success",
@@ -90,24 +89,15 @@ export default function useClerkSignUp() {
     }
   };
 
-  const setSessionActive = async () => {
-    if (!isLoaded) return;
-    dispatch(setIsLoading(true));
-    setActive !== undefined &&
-      (await setActive({ session: verification.signInSessionId }));
-    dispatch(setIsLoading(false));
-  };
-
   const clearSignUpData = () => {
     setUserInfo(undefined);
-    setVerification({ state: "", error: "", signInSessionId: null });
+    setVerification({ state: "", error: "" });
   };
 
   return {
     clerkSignUp,
     clerkVerification,
     verification,
-    setSessionActive,
     clearSignUpData,
   };
 }

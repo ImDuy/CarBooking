@@ -1,23 +1,24 @@
-import { NavigationProp, useNavigation } from "@react-navigation/native";
+import { Redirect, router } from "expo-router";
 import React, { useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import PrimaryButton from "../../components/PrimaryButton";
-import Page from "../../components/onboarding/Page";
-import PageIndicator from "../../components/onboarding/PageIndicator";
-import { onboarding } from "../../constants/data";
-import { defaultStyles } from "../../constants/styles";
-import { AuthStackParamList } from "../../utils/navigation-types";
+import Page from "../components/onboarding/Page";
+import PageIndicator from "../components/onboarding/PageIndicator";
+import PrimaryButton from "../components/PrimaryButton";
+import { onboarding } from "../constants/data";
+import { defaultStyles } from "../constants/styles";
+import { ClerkLoading, useAuth } from "@clerk/clerk-expo";
+import LoadingOverlay from "../components/LoadingOverlay";
 
 export default function Onboarding() {
   const { top, bottom } = useSafeAreaInsets();
+  const { isSignedIn } = useAuth();
   const ref = useRef<PagerView>(null);
   const [activePageIdx, setActivePageIdx] = useState(0);
-  const navigation = useNavigation<NavigationProp<AuthStackParamList>>();
 
   const navigateToNextPage = () => {
-    if (activePageIdx === 2) navigation.navigate("LogIn");
+    if (activePageIdx === 2) router.navigate("LogIn");
     else {
       ref.current?.setPage(activePageIdx + 1);
     }
@@ -32,6 +33,8 @@ export default function Onboarding() {
         image={item.image}
       />
     ));
+
+  if (isSignedIn) return <Redirect href="/(root)/(tabs)/Home" />;
   return (
     <View
       style={[
@@ -59,6 +62,10 @@ export default function Onboarding() {
           containerStyle={{ marginBottom: "auto" }}
         />
       </View>
+
+      <ClerkLoading>
+        <LoadingOverlay />
+      </ClerkLoading>
     </View>
   );
 }

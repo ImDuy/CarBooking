@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import { AuthFormInfo } from "../../utils/types";
 import { setIsLoading } from "../../store/appSlice";
 import { Alert } from "react-native";
+import { router } from "expo-router";
 
 export default function useClerkSignIn() {
   const { signIn, setActive, isLoaded } = useSignIn();
@@ -24,7 +25,8 @@ export default function useClerkSignIn() {
 
         dispatch(setIsLoading(false));
         if (signInAttempt.status === "complete") {
-          setActive({ session: signInAttempt.createdSessionId });
+          router.navigate("/(root)/(tabs)/Home");
+          await setActive({ session: signInAttempt.createdSessionId });
         } else {
           // See https://clerk.com/docs/custom-flows/error-handling
           // for more info on error handling

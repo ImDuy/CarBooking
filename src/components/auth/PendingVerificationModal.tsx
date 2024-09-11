@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { StyleSheet, Text } from "react-native";
 import Modal, { ModalProps } from "react-native-modal";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+
+import { useSelector } from "react-redux";
 import { colors } from "../../constants/colors";
 import { icons } from "../../constants/icons";
+import { RootState } from "../../store/store";
 import KeyboardDismissView from "../KeyboardDismissView";
+import LoadingOverlay from "../LoadingOverlay";
 import PrimaryButton from "../PrimaryButton";
 import InputField from "./InputField";
-import { RootState } from "../../store/store";
-import { useSelector } from "react-redux";
-import LoadingOverlay from "../LoadingOverlay";
 
 interface Props extends Partial<ModalProps> {
   error: string;
