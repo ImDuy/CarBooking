@@ -10,7 +10,7 @@ import { RootState } from "../../store/store";
 import KeyboardDismissView from "../KeyboardDismissView";
 import LoadingOverlay from "../LoadingOverlay";
 import PrimaryButton from "../PrimaryButton";
-import InputField from "./InputField";
+import AuthInputField from "./AuthInputField";
 
 interface Props extends Partial<ModalProps> {
   error: string;
@@ -47,7 +47,7 @@ export default function PendingVerificationModal({
         <Text style={styles.subTitle}>
           We've sent a verification code to your email address
         </Text>
-        <InputField
+        <AuthInputField
           label="Code"
           value={verificationCode}
           iconLeft={icons.lock}

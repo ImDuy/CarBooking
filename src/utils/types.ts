@@ -9,6 +9,9 @@ export type Driver = {
 };
 
 export type Ride = {
+  ride_id: number;
+  driver_id: number;
+  user_id: number;
   origin_address: string;
   destination_address: string;
   origin_latitude: number;
@@ -18,13 +21,16 @@ export type Ride = {
   ride_time: number;
   fare_price: number;
   payment_status: string;
-  driver_id: number;
-  user_email: string;
+  // user_email: string;
   created_at: string;
   driver: {
+    driver_id: number;
     first_name: string;
     last_name: string;
     car_seats: number;
+    profile_image_url: string;
+    car_image_url: string;
+    rating: string;
   };
 };
 

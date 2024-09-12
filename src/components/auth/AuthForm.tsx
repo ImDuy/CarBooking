@@ -6,8 +6,8 @@ import PrimaryButton from "../PrimaryButton";
 import SecondaryButton from "../SecondaryButton";
 import AuthDivider from "./AuthDivider";
 import FormFooter from "./FormFooter";
-import InputField from "./InputField";
 import { AuthFormInfo } from "../../utils/types";
+import AuthInputField from "./AuthInputField";
 
 interface Props {
   screen: "login" | "signup";
@@ -24,7 +24,7 @@ export default function AuthForm({
   return (
     <View style={[defaultStyles.screenContainer, styles.container]}>
       {screen === "signup" && (
-        <InputField
+        <AuthInputField
           label="Name"
           value={form.name}
           placeholder="Enter name"
@@ -37,7 +37,7 @@ export default function AuthForm({
           clearText={() => setForm((prevForm) => ({ ...prevForm, name: "" }))}
         />
       )}
-      <InputField
+      <AuthInputField
         label="Email"
         value={form.email}
         placeholder="Enter email"
@@ -50,7 +50,7 @@ export default function AuthForm({
         }
         clearText={() => setForm((prevForm) => ({ ...prevForm, email: "" }))}
       />
-      <InputField
+      <AuthInputField
         password
         label="Password"
         value={form.password}

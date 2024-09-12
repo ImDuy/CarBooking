@@ -3,7 +3,7 @@ import React from "react";
 import TabBarIcon from "../../../components/TabBarIcon";
 import { colors } from "../../../constants/colors";
 import { icons } from "../../../constants/icons";
-import { screenPadding } from "../../../constants/sizes";
+import { bottomTabSize, screenPadding } from "../../../constants/sizes";
 
 export default function TabLayout() {
   return (
@@ -14,13 +14,13 @@ export default function TabLayout() {
         tabBarShowLabel: false,
         tabBarStyle: {
           backgroundColor: colors.tabBar_bg,
-          marginBottom: 20,
+          marginBottom: bottomTabSize.marginBottom,
           marginHorizontal: screenPadding.horizontal / 2,
           borderRadius: 40,
-          height: 72,
+          height: bottomTabSize.height,
+          position: "absolute",
         },
       }}
-      sceneContainerStyle={{ backgroundColor: colors.bg }}
     >
       <Tabs.Screen
         name="Home"

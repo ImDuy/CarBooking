@@ -1,26 +1,19 @@
-import React, { ReactNode } from "react";
+import React from "react";
 import {
   Keyboard,
-  StyleProp,
   TouchableWithoutFeedback,
   View,
-  ViewStyle,
+  ViewProps,
 } from "react-native";
 
-interface Props {
-  containerStyle?: StyleProp<ViewStyle>;
-  children?: ReactNode;
-}
-export default function KeyboardDismissView({
-  containerStyle,
-  children,
-}: Props) {
+interface Props extends ViewProps {}
+export default function KeyboardDismissView({ ...props }: Props) {
   return (
     <TouchableWithoutFeedback
       onPress={() => Keyboard.dismiss()}
       accessible={false}
     >
-      <View style={containerStyle}>{children}</View>
+      <View {...props}>{props.children}</View>
     </TouchableWithoutFeedback>
   );
 }

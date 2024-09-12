@@ -8,4 +8,8 @@ export const icons = {
   list: require("../../assets/icons/list.png"),
   chat: require("../../assets/icons/chat.png"),
   profile: require("../../assets/icons/profile.png"),
+  to: require("../../assets/icons/to.png"),
+  point: require("../../assets/icons/point.png"),
+  out: require("../../assets/icons/out.png"),
+  search: require("../../assets/icons/search.png"),
 };
