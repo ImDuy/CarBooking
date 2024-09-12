@@ -1,6 +1,6 @@
-import { ClerkProvider, useClerk } from "@clerk/clerk-expo";
+import { ClerkProvider } from "@clerk/clerk-expo";
 import { useFonts } from "expo-font";
-import { Slot, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { StatusBar } from "expo-status-bar";
 import { useEffect } from "react";
@@ -10,7 +10,6 @@ import LoadingOverlay from "../components/LoadingOverlay";
 import { defaultStyles } from "../constants/styles";
 import { RootState, store } from "../store/store";
 import { tokenCache } from "../utils/clerk-auth";
-import { colors } from "../constants/colors";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 if (!publishableKey) {
@@ -44,7 +43,7 @@ export default function App() {
   return (
     <>
       <StatusBar style="auto" />
-      <ClerkProvider publishableKey={publishableKey}>
+      <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
         <Provider store={store}>
           <AppLayout />
         </Provider>
@@ -58,15 +57,8 @@ const AppLayout = () => {
 
   return (
     <View style={defaultStyles.flex1}>
-      <Stack
-        screenOptions={{
-          headerShown: false,
-          contentStyle: { backgroundColor: colors.bg },
-        }}
-      >
+      <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
-        <Stack.Screen name="LogIn" />
-        <Stack.Screen name="SignUp" />
       </Stack>
       {isLoading && <LoadingOverlay />}
     </View>

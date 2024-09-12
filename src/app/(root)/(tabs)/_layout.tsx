@@ -5,7 +5,7 @@ import { colors } from "../../../constants/colors";
 import { icons } from "../../../constants/icons";
 import { screenPadding } from "../../../constants/sizes";
 
-export default function _layout() {
+export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{

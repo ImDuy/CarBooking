@@ -2,14 +2,14 @@ import { useClerk } from "@clerk/clerk-expo";
 import React, { useState } from "react";
 import { Keyboard, KeyboardAvoidingView, Platform } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import SuccessModal from "../components/auth/SuccessModal";
-import AuthForm from "../components/auth/AuthForm";
-import AuthHeader from "../components/auth/AuthHeader";
-import PendingVerificationModal from "../components/auth/PendingVerificationModal";
-import KeyboardDismissView from "../components/KeyboardDismissView";
-import { defaultStyles } from "../constants/styles";
-import useClerkSignUp from "../hooks/auth/useClerkSignUp";
-import { AuthFormInfo } from "../utils/types";
+import SuccessModal from "../../components/auth/SuccessModal";
+import AuthForm from "../../components/auth/AuthForm";
+import AuthHeader from "../../components/auth/AuthHeader";
+import PendingVerificationModal from "../../components/auth/PendingVerificationModal";
+import KeyboardDismissView from "../../components/KeyboardDismissView";
+import { defaultStyles } from "../../constants/styles";
+import useClerkSignUp from "../../hooks/auth/useClerkSignUp";
+import { AuthFormInfo } from "../../utils/types";
 import { router } from "expo-router";
 
 export default function SignUp() {
