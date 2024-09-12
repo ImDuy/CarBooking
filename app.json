@@ -30,12 +30,14 @@
     },
     "plugins": [
       [
-        "expo-font",
+
+        "expo-router",
         {
           "origin": "https://carbooking.dev/"
         }
-      ],
-      "expo-router"
+      ], 
+      "expo-font"
+
     ]
   }
 }

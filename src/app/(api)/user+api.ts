@@ -1,7 +1,7 @@
 import { neon } from "@neondatabase/serverless";
 
-const sql = neon(`${process.env.DATABASE_URL}`);
 export async function POST(request: Request) {
+  const sql = neon(`${process.env.DATABASE_URL}`);
   try {
     const { name, email, clerkId } = await request.json();
 

@@ -49,19 +49,18 @@ export default function useClerkSignUp() {
       const completeSignUp = await signUp.attemptEmailAddressVerification({
         code,
       });
-      dispatch(setIsLoading(false));
       if (completeSignUp.status === "complete") {
         // create user in database
-        // await fetchAPI("/user", {
-        //   method: "POST",
-        //   body: JSON.stringify({
-        //     name: userInfo?.name,
-        //     email: userInfo?.email,
-        //     clerkId: completeSignUp.id,
-        //   }),
-        // });
-
+        await fetchAPI("/user", {
+          method: "POST",
+          body: JSON.stringify({
+            name: userInfo?.name,
+            email: userInfo?.email,
+            clerkId: completeSignUp.id,
+          }),
+        });
         await setActive({ session: completeSignUp.createdSessionId });
+        dispatch(setIsLoading(false));
         setVerification((prevState) => ({
           ...prevState,
           state: "success",
@@ -79,7 +78,10 @@ export default function useClerkSignUp() {
       dispatch(setIsLoading(false));
 
       if (err instanceof TypeError) {
-        console.log(typeof err);
+        setVerification((prevState) => ({
+          ...prevState,
+          error: err.message,
+        }));
       } else {
         setVerification((prevState) => ({
           ...prevState,
