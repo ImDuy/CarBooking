@@ -48,7 +48,7 @@ export default function SignUp() {
       style={{ ...defaultStyles.flex1, paddingBottom: bottom }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <KeyboardDismissView containerStyle={defaultStyles.flex1}>
+      <KeyboardDismissView style={defaultStyles.flex1}>
         <AuthHeader title="Create Your Account" />
         <AuthForm screen="signup" onPrimaryBtnPress={onSignUpPress} />
         <PendingVerificationModal

@@ -15,7 +15,6 @@ import { icons } from "../constants/icons";
 interface Props extends TextInputProps {
   value: string;
   iconLeft: any;
-  border?: boolean;
   password?: boolean;
   clearText: () => void;
   containerStyle?: StyleProp<ViewStyle>;
@@ -23,7 +22,6 @@ interface Props extends TextInputProps {
 export default function InputField({
   value,
   iconLeft,
-  border = false,
   password = false,
   clearText,
   containerStyle,
@@ -44,11 +42,7 @@ export default function InputField({
       style={[
         styles.inputContainer,
         {
-          borderColor: isFocused
-            ? colors.primary
-            : border
-            ? colors.bg_gray
-            : colors.input_bg,
+          borderColor: isFocused ? colors.primary : colors.input_bg,
           backgroundColor: isFocused ? colors.bg : colors.input_bg,
         },
         containerStyle,

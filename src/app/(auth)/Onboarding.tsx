@@ -5,12 +5,36 @@ import PagerView from "react-native-pager-view";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ClerkLoading, useAuth } from "@clerk/clerk-expo";
-import { onboarding } from "../../constants/data";
 import Page from "../../components/onboarding/Page";
 import { defaultStyles } from "../../constants/styles";
 import PageIndicator from "../../components/onboarding/PageIndicator";
 import PrimaryButton from "../../components/PrimaryButton";
 import LoadingOverlay from "../../components/LoadingOverlay";
+import { images } from "../../constants/images";
+
+export const onboarding = [
+  {
+    id: 1,
+    title: "Best car in your hands with Ryde",
+    description:
+      "Discover the convenience of finding your perfect ride with our Ryde App",
+    image: images.onboarding1,
+  },
+  {
+    id: 2,
+    title: "The perfect ride is just a tap away!",
+    description:
+      "Your journey begins with Ryde. Find your ideal ride effortlessly",
+    image: images.onboarding2,
+  },
+  {
+    id: 3,
+    title: "Your ride, your way. Let's go!",
+    description:
+      "Enter your destination, sit back, and let us take care of the rest",
+    image: images.onboarding3,
+  },
+];
 
 export default function Onboarding() {
   const { top, bottom } = useSafeAreaInsets();

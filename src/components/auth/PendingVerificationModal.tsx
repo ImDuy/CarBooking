@@ -42,7 +42,7 @@ export default function PendingVerificationModal({
       //   hideModalContentWhileAnimating
       {...modalProps}
     >
-      <KeyboardDismissView containerStyle={styles.container}>
+      <KeyboardDismissView style={styles.container}>
         <Text style={styles.title}>Verification</Text>
         <Text style={styles.subTitle}>
           We've sent a verification code to your email address

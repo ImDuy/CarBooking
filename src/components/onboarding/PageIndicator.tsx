@@ -1,7 +1,7 @@
 import React from "react";
 import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
-import { onboarding } from "../../constants/data";
 import IndicatorBar from "./IndicatorBar";
+import { onboarding } from "../../app/(auth)/Onboarding";
 
 interface Props {
   activePageIdx: number;

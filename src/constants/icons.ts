@@ -12,4 +12,6 @@ export const icons = {
   point: require("../../assets/icons/point.png"),
   out: require("../../assets/icons/out.png"),
   search: require("../../assets/icons/search.png"),
+  marker: require("../../assets/icons/marker.png"),
+  selectedMarker: require("../../assets/icons/selected-marker.png"),
 };

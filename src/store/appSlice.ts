@@ -9,7 +9,7 @@ const initialState: AppState = {
   isLoading: false,
 };
 
-export const appSlice = createSlice({
+export const slice = createSlice({
   name: "app",
   initialState,
   reducers: {
@@ -20,6 +20,6 @@ export const appSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setIsLoading } = appSlice.actions;
+export const { setIsLoading } = slice.actions;
 
-export const appReducer = appSlice.reducer;
+export const appReducer = slice.reducer;

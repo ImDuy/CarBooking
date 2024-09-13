@@ -1,12 +1,18 @@
 export type Driver = {
-  driver_id: number;
+  id: number;
   first_name: string;
   last_name: string;
   profile_image_url: string;
   car_image_url: string;
   car_seats: number;
-  rating: number;
+  rating: string;
 };
+
+export interface DriverLocation extends Driver {
+  latitude: number;
+  longitude: number;
+  title: string;
+}
 
 export type Ride = {
   ride_id: number;
@@ -23,15 +29,7 @@ export type Ride = {
   payment_status: string;
   // user_email: string;
   created_at: string;
-  driver: {
-    driver_id: number;
-    first_name: string;
-    last_name: string;
-    car_seats: number;
-    profile_image_url: string;
-    car_image_url: string;
-    rating: string;
-  };
+  driver: Driver;
 };
 
 export type AuthFormInfo = {

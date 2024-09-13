@@ -21,7 +21,7 @@ export default function LogIn() {
       style={{ ...defaultStyles.flex1, paddingBottom: bottom }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
     >
-      <KeyboardDismissView containerStyle={defaultStyles.flex1}>
+      <KeyboardDismissView style={defaultStyles.flex1}>
         <AuthHeader title="Welcome 👋" />
         <AuthForm screen="login" onPrimaryBtnPress={onSignInPress} />
       </KeyboardDismissView>
