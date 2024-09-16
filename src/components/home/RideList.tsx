@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
   },
   searchContainer: {
     paddingBottom: 20,
+    zIndex: 99,
   },
   mapContainer: {
     marginBottom: 20,

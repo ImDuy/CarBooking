@@ -36,7 +36,6 @@ export default function UserLocationMap({ containerStyle }: Props) {
     region.latitude,
     region.longitude
   );
-  console.log(driversLocation);
 
   const renderDriverMarkers = () =>
     driversLocation.map((driver) => (
