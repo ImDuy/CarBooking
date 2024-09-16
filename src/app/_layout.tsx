@@ -62,6 +62,8 @@ const AppLayout = () => {
     <View style={defaultStyles.flex1}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="index" />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(root)" />
       </Stack>
       {isLoading && <LoadingOverlay />}
     </View>
