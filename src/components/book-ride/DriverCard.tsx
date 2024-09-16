@@ -1,23 +1,22 @@
-import {
-  Image,
-  StyleProp,
-  StyleSheet,
-  Text,
-  View,
-  ViewStyle,
-} from "react-native";
 import React from "react";
-import { Driver } from "../../utils/types";
-import { icons } from "../../constants/icons";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../../constants/colors";
+import { icons } from "../../constants/icons";
 import { screenPadding } from "../../constants/sizes";
+import { Driver } from "../../utils/types";
 
 interface Props {
-  containerStyle?: StyleProp<ViewStyle>;
   driver: Driver;
+  selectedDriverId: number | null;
+  setSelectedDriverId: (id: number) => void;
 }
-export default function DriverCard({ containerStyle, driver }: Props) {
+export default function DriverCard({
+  driver,
+  selectedDriverId,
+  setSelectedDriverId,
+}: Props) {
   const {
+    id,
     car_image_url,
     car_seats,
     first_name,
@@ -26,7 +25,13 @@ export default function DriverCard({ containerStyle, driver }: Props) {
     rating,
   } = driver;
   return (
-    <View style={[styles.container, containerStyle]}>
+    <TouchableOpacity
+      style={[
+        styles.container,
+        selectedDriverId === id && { backgroundColor: colors.light_primary },
+      ]}
+      onPress={() => setSelectedDriverId(id)}
+    >
       <Image source={{ uri: profile_image_url }} style={styles.avatar} />
 
       <View style={styles.infoContainer}>
@@ -55,13 +60,15 @@ export default function DriverCard({ containerStyle, driver }: Props) {
       </View>
 
       <Image source={{ uri: car_image_url }} style={styles.carImage} />
-    </View>
+    </TouchableOpacity>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    paddingHorizontal: 8,
     paddingVertical: (screenPadding.horizontal * 2) / 3,
+    borderRadius: 10,
     flexDirection: "row",
     alignItems: "center",
     gap: 12,

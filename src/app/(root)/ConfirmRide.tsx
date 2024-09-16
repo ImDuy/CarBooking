@@ -4,7 +4,7 @@ import {
   BottomSheetFooterProps,
 } from "@gorhom/bottom-sheet";
 import { router } from "expo-router";
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import DriverCard from "../../components/book-ride/DriverCard";
 import RideLayout from "../../components/book-ride/RideLayout";
@@ -17,8 +17,8 @@ import { colors } from "../../constants/colors";
 
 export default function ConfirmRide() {
   const { bottom } = useSafeAreaInsets();
+  const [selectedDriverId, setSelectedDriverId] = useState<number | null>(null);
 
-  const onSelectRide = () => router.navigate("/BookRide");
   const renderFooter = useCallback(
     (props: BottomSheetFooterProps) => (
       <BottomSheetFooter
@@ -29,7 +29,7 @@ export default function ConfirmRide() {
         <PrimaryButton
           label="Select Ride"
           containerStyle={style.selectRideBtn}
-          onPress={onSelectRide}
+          onPress={() => router.navigate("/BookRide")}
         />
       </BottomSheetFooter>
     ),
@@ -41,8 +41,14 @@ export default function ConfirmRide() {
       <BottomSheetFlatList
         contentContainerStyle={{ paddingBottom: bottom }}
         data={mockedDrivers}
-        renderItem={({ item }) => <DriverCard driver={item} />}
-        ItemSeparatorComponent={() => <Divider style={{ height: 1 }} />}
+        renderItem={({ item }) => (
+          <DriverCard
+            driver={item}
+            selectedDriverId={selectedDriverId}
+            setSelectedDriverId={(id: number) => setSelectedDriverId(id)}
+          />
+        )}
+        ItemSeparatorComponent={() => <Divider style={style.divider} />}
       />
     </RideLayout>
   );
@@ -57,5 +63,9 @@ const style = StyleSheet.create({
     marginHorizontal: (screenPadding.horizontal * 2) / 3,
     marginTop: 8,
     marginBottom: 18,
+  },
+  divider: {
+    marginHorizontal: 4,
+    height: 1,
   },
 });
