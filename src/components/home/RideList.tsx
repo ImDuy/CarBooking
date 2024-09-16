@@ -22,7 +22,7 @@ export default function RideList() {
 
   return (
     <FlatList
-      keyboardShouldPersistTaps="always" // for the list view in GooglePlaceAutoCompleteInput to work when keyboard in enabled
+      keyboardShouldPersistTaps="handled" // for the list view in GooglePlaceAutoCompleteInput to work when keyboard in enabled
       contentContainerStyle={styles.listContainer}
       data={mockedRecentRides}
       keyExtractor={(item) => item.ride_id.toString()}
