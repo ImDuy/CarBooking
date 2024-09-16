@@ -16,4 +16,6 @@ export const icons = {
   selectedMarker: require("../../assets/icons/selected-marker.png"),
   backArrow: require("../../assets/icons/back-arrow.png"),
   target: require("../../assets/icons/target.png"),
+  dollar: require("../../assets/icons/dollar.png"),
+  star: require("../../assets/icons/star.png"),
 };

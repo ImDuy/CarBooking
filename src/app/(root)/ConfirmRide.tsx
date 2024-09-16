@@ -1,9 +1,61 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import {
+  BottomSheetFlatList,
+  BottomSheetFooter,
+  BottomSheetFooterProps,
+} from "@gorhom/bottom-sheet";
+import { router } from "expo-router";
+import React, { useCallback } from "react";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
+import DriverCard from "../../components/book-ride/DriverCard";
 import RideLayout from "../../components/book-ride/RideLayout";
+import Divider from "../../components/Divider";
+import PrimaryButton from "../../components/PrimaryButton";
+import { mockedDrivers } from "../../constants/data";
+import { StyleSheet } from "react-native";
+import { screenPadding } from "../../constants/sizes";
+import { colors } from "../../constants/colors";
 
 export default function ConfirmRide() {
-  return <RideLayout title="Ride"></RideLayout>;
+  const { bottom } = useSafeAreaInsets();
+
+  const onSelectRide = () => router.navigate("/BookRide");
+  const renderFooter = useCallback(
+    (props: BottomSheetFooterProps) => (
+      <BottomSheetFooter
+        {...props}
+        bottomInset={bottom}
+        style={style.footerContainer}
+      >
+        <PrimaryButton
+          label="Select Ride"
+          containerStyle={style.selectRideBtn}
+          onPress={onSelectRide}
+        />
+      </BottomSheetFooter>
+    ),
+    [bottom]
+  );
+
+  return (
+    <RideLayout title="Choose a Rider" bottomSheetFooter={renderFooter}>
+      <BottomSheetFlatList
+        contentContainerStyle={{ paddingBottom: bottom }}
+        data={mockedDrivers}
+        renderItem={({ item }) => <DriverCard driver={item} />}
+        ItemSeparatorComponent={() => <Divider style={{ height: 1 }} />}
+      />
+    </RideLayout>
+  );
 }
 
-const styles = StyleSheet.create({});
+const style = StyleSheet.create({
+  footerContainer: {
+    backgroundColor: colors.bg,
+  },
+  selectRideBtn: {
+    height: 54,
+    marginHorizontal: (screenPadding.horizontal * 2) / 3,
+    marginTop: 8,
+    marginBottom: 18,
+  },
+});
