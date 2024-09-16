@@ -51,7 +51,6 @@ export default function GooglePlaceInput({
   return (
     <View style={containerStyle}>
       <GooglePlacesAutocomplete
-        enablePoweredByContainer={false}
         placeholder={initialLocation ?? "Where do you want to go?"}
         textInputProps={{
           autoCorrect: false,
@@ -98,11 +97,11 @@ const styles = StyleSheet.create({
     marginLeft: 2,
   },
   listView: {
-    position: "absolute",
-    zIndex: 99,
-    top: 60,
-    borderRadius: 10,
+    marginTop: 7,
+    marginHorizontal: 4,
+    ...defaultStyles.shadowLight,
   },
+
   iconLeft: {
     width: 24,
     height: 24,
