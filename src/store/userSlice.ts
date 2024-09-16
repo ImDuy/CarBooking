@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { Location } from "../utils/types";
 
 export interface UserState {
   userLatitude: number | null;
@@ -23,26 +24,12 @@ export const slice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    setUserLocation: (
-      state,
-      action: PayloadAction<{
-        latitude: number;
-        longitude: number;
-        address: string;
-      }>
-    ) => {
+    setUserLocation: (state, action: PayloadAction<Location>) => {
       state.userLatitude = action.payload.latitude;
       state.userLongitude = action.payload.longitude;
       state.userAddress = action.payload.address;
     },
-    setDestinationLocation: (
-      state,
-      action: PayloadAction<{
-        latitude: number;
-        longitude: number;
-        address: string;
-      }>
-    ) => {
+    setDestinationLocation: (state, action: PayloadAction<Location>) => {
       state.destinationLatitude = action.payload.latitude;
       state.destinationLongitude = action.payload.longitude;
       state.destinationAddress = action.payload.address;

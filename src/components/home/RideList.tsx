@@ -5,10 +5,26 @@ import { mockedRecentRides } from "../../constants/data";
 import { bottomTabSize } from "../../constants/sizes";
 import RideCard from "./RideCard";
 import Header from "./Header";
-import SearchInput from "./SearchInput";
+import GooglePlaceInput from "../GooglePlaceInput";
 import UserLocationMap from "./UserLocationMap";
+import { useDispatch } from "react-redux";
+import { setDestinationLocation } from "../../store/userSlice";
+import { Location } from "../../utils/types";
+import { router } from "expo-router";
 
 export default function RideList() {
+  const dispatch = useDispatch();
+  const handleSearchLocationPress = (location: Location) => {
+    dispatch(
+      setDestinationLocation({
+        latitude: location.latitude,
+        longitude: location.longitude,
+        address: location.address,
+      })
+    );
+    router.navigate("/(root)/FindRide");
+  };
+
   return (
     <FlatList
       contentContainerStyle={styles.listContainer}
@@ -20,7 +36,10 @@ export default function RideList() {
       ListHeaderComponent={() => (
         <>
           <Header />
-          <SearchInput containerStyle={styles.searchContainer} />
+          <GooglePlaceInput
+            containerStyle={styles.searchContainer}
+            handleLocationPress={handleSearchLocationPress}
+          />
           <Text style={styles.listHeaderText}>Your current location</Text>
           <UserLocationMap containerStyle={styles.mapContainer} />
           <Text style={styles.listHeaderText}>Recent Rides</Text>

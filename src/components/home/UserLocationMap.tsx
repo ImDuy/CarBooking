@@ -10,7 +10,7 @@ import {
   calculateRegion,
   generateMockedDriversLocation,
 } from "../../utils/helpers";
-import { DriverLocation } from "../../utils/types";
+import { DriverMarker } from "../../utils/types";
 
 interface Props {
   containerStyle?: StyleProp<ViewStyle>;
@@ -31,7 +31,7 @@ export default function UserLocationMap({ containerStyle }: Props) {
     destinationLatitude,
     destinationLongitude
   );
-  const driversLocation: DriverLocation[] = generateMockedDriversLocation(
+  const driversLocation: DriverMarker[] = generateMockedDriversLocation(
     mockedDrivers,
     region.latitude,
     region.longitude

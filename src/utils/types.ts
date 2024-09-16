@@ -8,7 +8,13 @@ export type Driver = {
   rating: string;
 };
 
-export interface DriverLocation extends Driver {
+export type Location = {
+  latitude: number;
+  longitude: number;
+  address: string;
+};
+
+export interface DriverMarker extends Driver {
   latitude: number;
   longitude: number;
   title: string;

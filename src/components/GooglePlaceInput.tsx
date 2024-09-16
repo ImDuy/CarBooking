@@ -1,4 +1,3 @@
-import { router } from "expo-router";
 import React from "react";
 import {
   Alert,
@@ -13,18 +12,21 @@ import {
   GooglePlaceDetail,
   GooglePlacesAutocomplete,
 } from "react-native-google-places-autocomplete";
-import { useDispatch } from "react-redux";
-import { colors } from "../../constants/colors";
-import { icons } from "../../constants/icons";
-import { defaultStyles } from "../../constants/styles";
-import { setDestinationLocation } from "../../store/userSlice";
+import { colors } from "../constants/colors";
+import { icons } from "../constants/icons";
+import { defaultStyles } from "../constants/styles";
+import { Location } from "../utils/types";
 
 interface Props {
   containerStyle?: StyleProp<ViewStyle>;
+  handleLocationPress: (location: Location) => void;
+  iconLeft?: any;
 }
-export default function SearchInput({ containerStyle }: Props) {
-  const dispatch = useDispatch();
-
+export default function GooglePlaceInput({
+  containerStyle,
+  handleLocationPress,
+  iconLeft,
+}: Props) {
   const onLocationPress = (
     data: GooglePlaceData,
     details: GooglePlaceDetail | null = null
@@ -36,14 +38,12 @@ export default function SearchInput({ containerStyle }: Props) {
       );
       return;
     }
-    dispatch(
-      setDestinationLocation({
-        latitude: details?.geometry.location.lat,
-        longitude: details?.geometry.location.lng,
-        address: data?.description,
-      })
-    );
-    router.navigate("/(root)/FindRide");
+
+    handleLocationPress({
+      latitude: details?.geometry.location.lat,
+      longitude: details?.geometry.location.lng,
+      address: data?.description,
+    });
   };
 
   return (
@@ -68,7 +68,7 @@ export default function SearchInput({ containerStyle }: Props) {
           listView: styles.listView,
         }}
         renderLeftButton={() => (
-          <Image source={icons.search} style={styles.iconLeft} />
+          <Image source={iconLeft ?? icons.search} style={styles.iconLeft} />
         )}
         onFail={(error) => console.log("error: " + error)}
       />
