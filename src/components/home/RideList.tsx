@@ -11,22 +11,18 @@ import { useDispatch } from "react-redux";
 import { setDestinationLocation } from "../../store/userSlice";
 import { Location } from "../../utils/types";
 import { router } from "expo-router";
+import { defaultStyles } from "../../constants/styles";
 
 export default function RideList() {
   const dispatch = useDispatch();
   const handleSearchLocationPress = (location: Location) => {
-    dispatch(
-      setDestinationLocation({
-        latitude: location.latitude,
-        longitude: location.longitude,
-        address: location.address,
-      })
-    );
+    dispatch(setDestinationLocation(location));
     router.navigate("/(root)/FindRide");
   };
 
   return (
     <FlatList
+      keyboardShouldPersistTaps="always" // for the list view in GooglePlaceAutoCompleteInput to work when keyboard in enabled
       contentContainerStyle={styles.listContainer}
       data={mockedRecentRides}
       keyExtractor={(item) => item.ride_id.toString()}
@@ -37,7 +33,7 @@ export default function RideList() {
         <>
           <Header />
           <GooglePlaceInput
-            containerStyle={styles.searchContainer}
+            containerStyle={defaultStyles.shadowLight}
             handleLocationPress={handleSearchLocationPress}
           />
           <Text style={styles.listHeaderText}>Your current location</Text>
@@ -60,11 +56,8 @@ const styles = StyleSheet.create({
     color: colors.text,
     fontFamily: "Jakarta-Bold",
     fontSize: 20,
+    marginTop: 20,
     marginBottom: 12,
-  },
-  searchContainer: {
-    paddingBottom: 20,
-    zIndex: 99,
   },
   mapContainer: {
     marginBottom: 20,

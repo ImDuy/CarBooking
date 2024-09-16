@@ -1,20 +1,19 @@
 import React from "react";
-import { Image, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { colors } from "../../constants/colors";
 import { icons } from "../../constants/icons";
 import { headerHeight } from "../../constants/sizes";
-import KeyboardDismissView from "../KeyboardDismissView";
 
 export default function Header() {
   return (
-    <KeyboardDismissView style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.title} numberOfLines={1}>
         Welcome 👋
       </Text>
       <TouchableOpacity style={styles.btnContainer}>
         <Image source={icons.out} style={styles.icon} />
       </TouchableOpacity>
-    </KeyboardDismissView>
+    </View>
   );
 }
 

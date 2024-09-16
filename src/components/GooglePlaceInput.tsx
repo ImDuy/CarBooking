@@ -1,3 +1,4 @@
+import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
 import React from "react";
 import {
   Alert,
@@ -18,16 +19,20 @@ import { defaultStyles } from "../constants/styles";
 import { Location } from "../utils/types";
 
 interface Props {
+  bottomSheetInput?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
+  listViewStyle?: StyleProp<ViewStyle>;
   iconLeft?: any;
   initialLocation?: string;
   handleLocationPress: (location: Location) => void;
 }
 export default function GooglePlaceInput({
   containerStyle,
+  listViewStyle,
   handleLocationPress,
   iconLeft,
   initialLocation,
+  bottomSheetInput = false,
 }: Props) {
   const onLocationPress = (
     data: GooglePlaceData,
@@ -49,13 +54,16 @@ export default function GooglePlaceInput({
   };
 
   return (
-    <View style={containerStyle}>
+    <View style={[styles.container, containerStyle]}>
       <GooglePlacesAutocomplete
         placeholder={initialLocation ?? "Where do you want to go?"}
         textInputProps={{
+          InputComp: bottomSheetInput && BottomSheetTextInput,
           autoCorrect: false,
           autoCapitalize: "words",
-          placeholderTextColor: colors.textMuted,
+          placeholderTextColor: initialLocation
+            ? colors.text
+            : colors.textMuted,
         }}
         debounce={200}
         fetchDetails={true}
@@ -67,29 +75,36 @@ export default function GooglePlaceInput({
         styles={{
           textInputContainer: styles.inputContainer,
           textInput: styles.input,
-          listView: styles.listView,
+          listView: [styles.listView, listViewStyle],
         }}
         renderLeftButton={() => (
           <Image source={iconLeft ?? icons.search} style={styles.iconLeft} />
         )}
         onFail={(error) => console.log("error: " + error)}
+        onNotFound={() => console.log("not found")}
+        onTimeout={() => console.log("timeout")}
       />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  inputContainer: {
-    marginHorizontal: 2,
+  container: {
     backgroundColor: colors.bg,
     borderRadius: 40,
     height: 50,
+    marginHorizontal: 2,
+    zIndex: 99,
+  },
+  inputContainer: {
+    borderRadius: 40,
+    height: 50,
     paddingHorizontal: 14,
-    ...defaultStyles.shadowLight,
   },
   input: {
     padding: 0,
     height: "100%",
+    backgroundColor: "transparent",
     color: colors.text,
     fontFamily: "Jakarta-Medium",
     fontSize: 16,
@@ -97,9 +112,13 @@ const styles = StyleSheet.create({
     marginLeft: 2,
   },
   listView: {
-    marginTop: 7,
+    position: "absolute",
+    top: 57,
     marginHorizontal: 4,
-    ...defaultStyles.shadowLight,
+    zIndex: 99,
+    backgroundColor: "white",
+    borderRadius: 12,
+    ...defaultStyles.shadowDark,
   },
 
   iconLeft: {

@@ -1,10 +1,10 @@
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React from "react";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-import { screenPadding } from "../constants/sizes";
-import { icons } from "../constants/icons";
+import { screenPadding } from "../../constants/sizes";
+import { icons } from "../../constants/icons";
 import { router } from "expo-router";
-import { colors } from "../constants/colors";
+import { colors } from "../../constants/colors";
 
 interface Props {
   title?: string;
@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
   container: {
     zIndex: 99,
     position: "absolute",
-    left: screenPadding.horizontal,
+    left: (screenPadding.horizontal * 2) / 3,
     backgroundColor: "transparent",
     flexDirection: "row",
     alignItems: "center",
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
   },
   title: {
     color: colors.text,
-    fontFamily: "Jakarta-Bold",
-    fontSize: 24,
+    fontFamily: "Jakarta-SemiBold",
+    fontSize: 22,
   },
 });
