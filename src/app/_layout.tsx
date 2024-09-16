@@ -10,6 +10,7 @@ import LoadingOverlay from "../components/LoadingOverlay";
 import { defaultStyles } from "../constants/styles";
 import { RootState, store } from "../store/store";
 import { tokenCache } from "../utils/clerk-auth";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 if (!publishableKey) {
@@ -45,7 +46,9 @@ export default function App() {
       <StatusBar style="auto" />
       <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
         <Provider store={store}>
-          <AppLayout />
+          <GestureHandlerRootView style={defaultStyles.flex1}>
+            <AppLayout />
+          </GestureHandlerRootView>
         </Provider>
       </ClerkProvider>
     </>

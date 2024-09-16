@@ -2,15 +2,15 @@ import React from "react";
 import { StyleProp, StyleSheet, ViewStyle } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useSelector } from "react-redux";
-import { mockedDrivers } from "../../constants/data";
-import { icons } from "../../constants/icons";
-import useUserLocation from "../../hooks/useUserLocation";
-import { RootState } from "../../store/store";
+import { mockedDrivers } from "../constants/data";
+import { icons } from "../constants/icons";
+import useUserLocation from "../hooks/useUserLocation";
+import { RootState } from "../store/store";
 import {
   calculateRegion,
   generateMockedDriversLocation,
-} from "../../utils/helpers";
-import { DriverMarker } from "../../utils/types";
+} from "../utils/helpers";
+import { DriverMarker } from "../utils/types";
 
 interface Props {
   containerStyle?: StyleProp<ViewStyle>;

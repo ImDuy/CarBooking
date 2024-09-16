@@ -6,7 +6,7 @@ import { bottomTabSize } from "../../constants/sizes";
 import RideCard from "./RideCard";
 import Header from "./Header";
 import GooglePlaceInput from "../GooglePlaceInput";
-import UserLocationMap from "./UserLocationMap";
+import UserLocationMap from "../UserLocationMap";
 import { useDispatch } from "react-redux";
 import { setDestinationLocation } from "../../store/userSlice";
 import { Location } from "../../utils/types";

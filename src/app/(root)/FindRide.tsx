@@ -1,8 +1,10 @@
 import React from "react";
-import { StyleSheet, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { useSelector } from "react-redux";
-import ScreenContainer from "../../components/ScreenContainer";
+import { defaultStyles } from "../../constants/styles";
 import { RootState } from "../../store/store";
+import FloatingHeader from "../../components/FloatingHeader";
+import UserLocationMap from "../../components/UserLocationMap";
 
 export default function FindRide() {
   const { userAddress, destinationAddress } = useSelector(
@@ -10,10 +12,10 @@ export default function FindRide() {
   );
 
   return (
-    <ScreenContainer>
-      <Text>You are here: {userAddress}</Text>
-      <Text>You are going to: {destinationAddress}</Text>
-    </ScreenContainer>
+    <View style={defaultStyles.flex1}>
+      <FloatingHeader title="Ride" />
+      <UserLocationMap containerStyle={{ height: "100%" }} />
+    </View>
   );
 }
 
