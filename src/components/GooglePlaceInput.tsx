@@ -19,13 +19,15 @@ import { Location } from "../utils/types";
 
 interface Props {
   containerStyle?: StyleProp<ViewStyle>;
-  handleLocationPress: (location: Location) => void;
   iconLeft?: any;
+  initialLocation?: string;
+  handleLocationPress: (location: Location) => void;
 }
 export default function GooglePlaceInput({
   containerStyle,
   handleLocationPress,
   iconLeft,
+  initialLocation,
 }: Props) {
   const onLocationPress = (
     data: GooglePlaceData,
@@ -49,7 +51,8 @@ export default function GooglePlaceInput({
   return (
     <View style={containerStyle}>
       <GooglePlacesAutocomplete
-        placeholder="Where do you want to go?"
+        enablePoweredByContainer={false}
+        placeholder={initialLocation ?? "Where do you want to go?"}
         textInputProps={{
           autoCorrect: false,
           autoCapitalize: "words",
