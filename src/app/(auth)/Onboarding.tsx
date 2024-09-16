@@ -2,15 +2,15 @@ import { Redirect, router } from "expo-router";
 import React, { useRef, useState } from "react";
 import { View } from "react-native";
 import PagerView from "react-native-pager-view";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { ClerkLoading, useAuth } from "@clerk/clerk-expo";
+import LoadingOverlay from "../../components/LoadingOverlay";
 import Page from "../../components/onboarding/Page";
-import { defaultStyles } from "../../constants/styles";
 import PageIndicator from "../../components/onboarding/PageIndicator";
 import PrimaryButton from "../../components/PrimaryButton";
-import LoadingOverlay from "../../components/LoadingOverlay";
+import ScreenContainer from "../../components/ScreenContainer";
 import { images } from "../../constants/images";
+import { defaultStyles } from "../../constants/styles";
 
 export const onboarding = [
   {
@@ -37,7 +37,6 @@ export const onboarding = [
 ];
 
 export default function Onboarding() {
-  const { top, bottom } = useSafeAreaInsets();
   const { isSignedIn } = useAuth();
   const ref = useRef<PagerView>(null);
   const [activePageIdx, setActivePageIdx] = useState(0);
@@ -61,12 +60,7 @@ export default function Onboarding() {
 
   if (isSignedIn) return <Redirect href="/(root)/(tabs)/Home" />;
   return (
-    <View
-      style={[
-        defaultStyles.screenContainer,
-        { paddingTop: top, paddingBottom: bottom },
-      ]}
-    >
+    <ScreenContainer containerStyle={defaultStyles.screenContainer}>
       <PagerView
         ref={ref}
         style={{ flex: 2.8 }}
@@ -91,6 +85,6 @@ export default function Onboarding() {
       <ClerkLoading>
         <LoadingOverlay />
       </ClerkLoading>
-    </View>
+    </ScreenContainer>
   );
 }

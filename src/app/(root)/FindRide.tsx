@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
+import { StyleSheet, Text } from "react-native";
 import { useSelector } from "react-redux";
+import ScreenContainer from "../../components/ScreenContainer";
 import { RootState } from "../../store/store";
 
 export default function FindRide() {
@@ -9,10 +10,10 @@ export default function FindRide() {
   );
 
   return (
-    <View>
+    <ScreenContainer>
       <Text>You are here: {userAddress}</Text>
       <Text>You are going to: {destinationAddress}</Text>
-    </View>
+    </ScreenContainer>
   );
 }
 

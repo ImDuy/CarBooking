@@ -1,17 +1,14 @@
 import React from "react";
-import { StyleSheet, View } from "react-native";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { StyleSheet } from "react-native";
 import RideList from "../../../components/home/RideList";
+import ScreenContainer from "../../../components/ScreenContainer";
 import { screenPadding } from "../../../constants/sizes";
 
 export default function Home() {
-  const { top, bottom } = useSafeAreaInsets();
   return (
-    <View
-      style={[styles.container, { paddingTop: top, paddingBottom: bottom }]}
-    >
+    <ScreenContainer containerStyle={styles.container}>
       <RideList />
-    </View>
+    </ScreenContainer>
   );
 }
 
