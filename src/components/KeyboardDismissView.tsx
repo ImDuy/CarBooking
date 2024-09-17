@@ -13,7 +13,7 @@ export default function KeyboardDismissView({ ...props }: Props) {
       onPress={() => Keyboard.dismiss()}
       accessible={false}
     >
-      <View {...props}>{props.children}</View>
+      <View {...props} />
     </TouchableWithoutFeedback>
   );
 }
