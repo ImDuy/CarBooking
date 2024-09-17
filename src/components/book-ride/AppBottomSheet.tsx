@@ -1,11 +1,8 @@
-import BottomSheet, {
-  BottomSheetFooterProps,
-  BottomSheetView,
-} from "@gorhom/bottom-sheet";
+import BottomSheet, { BottomSheetFooterProps } from "@gorhom/bottom-sheet";
 import React, { FC, ReactNode, useRef } from "react";
 import { StyleSheet } from "react-native";
 import { colors } from "../../constants/colors";
-import { screenPadding, screenSize } from "../../constants/sizes";
+import { screenSize } from "../../constants/sizes";
 
 interface Props {
   children?: ReactNode;
@@ -26,7 +23,7 @@ export default function AppBottomSheet({ children, footer }: Props) {
       handleIndicatorStyle={styles.indicator}
       footerComponent={footer}
     >
-      <BottomSheetView style={styles.viewContainer}>{children}</BottomSheetView>
+      {children}
     </BottomSheet>
   );
 }
@@ -41,10 +38,5 @@ const styles = StyleSheet.create({
     width: 40,
     backgroundColor: colors.textMuted,
     marginBottom: 4,
-  },
-  viewContainer: {
-    flex: 1,
-    backgroundColor: colors.bg,
-    paddingHorizontal: (screenPadding.horizontal * 2) / 3,
   },
 });

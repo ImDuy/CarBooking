@@ -9,6 +9,8 @@ import { colors } from "../../constants/colors";
 import { icons } from "../../constants/icons";
 import { RootState } from "../../store/store";
 import { setDestinationLocation, setUserLocation } from "../../store/userSlice";
+import { BottomSheetView } from "@gorhom/bottom-sheet";
+import { screenPadding } from "../../constants/sizes";
 
 export default function FindRide() {
   const { userAddress, destinationAddress } = useSelector(
@@ -18,38 +20,47 @@ export default function FindRide() {
 
   return (
     <RideLayout title="Ride">
-      <Text style={styles.inputTitle}>From</Text>
-      <GooglePlaceInput
-        bottomSheetInput
-        initialLocation={userAddress ?? undefined}
-        containerStyle={{ ...styles.inputContainer, zIndex: 2 }}
-        listViewStyle={styles.inputListView}
-        iconLeft={icons.point}
-        handleLocationPress={(location) => dispatch(setUserLocation(location))}
-      />
+      <BottomSheetView style={styles.container}>
+        <Text style={styles.inputTitle}>From</Text>
+        <GooglePlaceInput
+          bottomSheetInput
+          initialLocation={userAddress ?? undefined}
+          containerStyle={{ ...styles.inputContainer, zIndex: 2 }}
+          listViewStyle={styles.inputListView}
+          iconLeft={icons.point}
+          handleLocationPress={(location) =>
+            dispatch(setUserLocation(location))
+          }
+        />
 
-      <Text style={{ ...styles.inputTitle, marginTop: 10 }}>To</Text>
-      <GooglePlaceInput
-        bottomSheetInput
-        initialLocation={destinationAddress ?? undefined}
-        containerStyle={{ ...styles.inputContainer, zIndex: 1 }}
-        listViewStyle={styles.inputListView}
-        iconLeft={icons.target}
-        handleLocationPress={(location) =>
-          dispatch(setDestinationLocation(location))
-        }
-      />
+        <Text style={{ ...styles.inputTitle, marginTop: 10 }}>To</Text>
+        <GooglePlaceInput
+          bottomSheetInput
+          initialLocation={destinationAddress ?? undefined}
+          containerStyle={{ ...styles.inputContainer, zIndex: 1 }}
+          listViewStyle={styles.inputListView}
+          iconLeft={icons.target}
+          handleLocationPress={(location) =>
+            dispatch(setDestinationLocation(location))
+          }
+        />
 
-      <PrimaryButton
-        label="Find Now"
-        containerStyle={styles.btnContainer}
-        onPress={() => router.navigate("/ConfirmRide")}
-      />
+        <PrimaryButton
+          label="Find Now"
+          containerStyle={styles.btnContainer}
+          onPress={() => router.navigate("/ConfirmRide")}
+        />
+      </BottomSheetView>
     </RideLayout>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.bg,
+    paddingHorizontal: (screenPadding.horizontal * 2) / 3,
+  },
   inputTitle: {
     color: colors.text,
     fontFamily: "Jakarta-Medium",

@@ -39,7 +39,7 @@ export default function ConfirmRide() {
   return (
     <RideLayout title="Choose a Rider" bottomSheetFooter={renderFooter}>
       <BottomSheetFlatList
-        contentContainerStyle={{ paddingBottom: bottom }}
+        contentContainerStyle={[style.container, { paddingBottom: bottom }]}
         data={mockedDrivers}
         renderItem={({ item }) => (
           <DriverCard
@@ -55,6 +55,11 @@ export default function ConfirmRide() {
 }
 
 const style = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: colors.bg,
+    paddingHorizontal: (screenPadding.horizontal * 2) / 3,
+  },
   footerContainer: {
     backgroundColor: colors.bg,
   },
