@@ -18,3 +18,4 @@ export const bottomTabSize = {
 };
 export const headerHeight = 64;
 export const appButtonHeight = 52;
+export const bottomSheetFooterHeight = 90;

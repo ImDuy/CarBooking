@@ -1,5 +1,5 @@
 import { BottomSheetTextInput } from "@gorhom/bottom-sheet";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import {
   Alert,
   Image,
@@ -12,13 +12,15 @@ import {
   GooglePlaceData,
   GooglePlaceDetail,
   GooglePlacesAutocomplete,
+  GooglePlacesAutocompleteProps,
+  GooglePlacesAutocompleteRef,
 } from "react-native-google-places-autocomplete";
 import { colors } from "../constants/colors";
 import { icons } from "../constants/icons";
 import { defaultStyles } from "../constants/styles";
 import { Location } from "../utils/types";
 
-interface Props {
+interface Props extends Partial<GooglePlacesAutocompleteProps> {
   bottomSheetInput?: boolean;
   containerStyle?: StyleProp<ViewStyle>;
   listViewStyle?: StyleProp<ViewStyle>;
@@ -33,7 +35,10 @@ export default function GooglePlaceInput({
   iconLeft,
   initialLocation,
   bottomSheetInput = false,
+  ...props
 }: Props) {
+  const ref = useRef<GooglePlacesAutocompleteRef>(null);
+
   const onLocationPress = (
     data: GooglePlaceData,
     details: GooglePlaceDetail | null = null
@@ -53,17 +58,22 @@ export default function GooglePlaceInput({
     });
   };
 
+  useEffect(() => {
+    if (initialLocation) {
+      ref.current?.setAddressText(initialLocation);
+    }
+  }, [initialLocation]);
+
   return (
     <View style={[styles.container, containerStyle]}>
       <GooglePlacesAutocomplete
-        placeholder={initialLocation ?? "Where do you want to go?"}
+        ref={ref}
+        placeholder="Where do you want to go?"
         textInputProps={{
           InputComp: bottomSheetInput && BottomSheetTextInput,
           autoCorrect: false,
           autoCapitalize: "words",
-          placeholderTextColor: initialLocation
-            ? colors.text
-            : colors.textMuted,
+          placeholderTextColor: colors.textMuted,
         }}
         debounce={200}
         fetchDetails={true}
@@ -83,6 +93,7 @@ export default function GooglePlaceInput({
         onFail={(error) => console.log("error: " + error)}
         onNotFound={() => console.log("not found")}
         onTimeout={() => console.log("timeout")}
+        {...props}
       />
     </View>
   );

@@ -11,6 +11,7 @@ import { defaultStyles } from "../constants/styles";
 import { RootState, store } from "../store/store";
 import { tokenCache } from "../utils/clerk-auth";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { BottomSheetModalProvider } from "@gorhom/bottom-sheet";
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!;
 if (!publishableKey) {
@@ -47,7 +48,9 @@ export default function App() {
       <ClerkProvider publishableKey={publishableKey} tokenCache={tokenCache}>
         <Provider store={store}>
           <GestureHandlerRootView style={defaultStyles.flex1}>
-            <AppLayout />
+            <BottomSheetModalProvider>
+              <AppLayout />
+            </BottomSheetModalProvider>
           </GestureHandlerRootView>
         </Provider>
       </ClerkProvider>

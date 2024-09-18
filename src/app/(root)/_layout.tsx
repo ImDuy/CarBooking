@@ -7,7 +7,6 @@ export default function RootLayout() {
       <Stack.Screen name="(tabs)" />
       <Stack.Screen name="FindRide" />
       <Stack.Screen name="ConfirmRide" />
-      <Stack.Screen name="BookRide" />
     </Stack>
   );
 }

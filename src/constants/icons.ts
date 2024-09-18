@@ -18,4 +18,5 @@ export const icons = {
   target: require("../../assets/icons/target.png"),
   dollar: require("../../assets/icons/dollar.png"),
   star: require("../../assets/icons/star.png"),
+  close: require("../../assets/icons/close.png"),
 };

@@ -1,19 +1,19 @@
 import React from "react";
 import { Image, StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import { colors } from "../../constants/colors";
-import { icons } from "../../constants/icons";
-import { screenPadding } from "../../constants/sizes";
-import { Driver } from "../../utils/types";
+import { colors } from "../../../constants/colors";
+import { icons } from "../../../constants/icons";
+import { screenPadding } from "../../../constants/sizes";
+import { Driver } from "../../../utils/types";
 
 interface Props {
   driver: Driver;
-  selectedDriverId: number | null;
-  setSelectedDriverId: (id: number) => void;
+  selectedDriver: Driver | null;
+  setSelectedDriver: (driver: Driver) => void;
 }
 export default function DriverCard({
   driver,
-  selectedDriverId,
-  setSelectedDriverId,
+  selectedDriver,
+  setSelectedDriver,
 }: Props) {
   const {
     id,
@@ -28,9 +28,9 @@ export default function DriverCard({
     <TouchableOpacity
       style={[
         styles.container,
-        selectedDriverId === id && { backgroundColor: colors.light_primary },
+        selectedDriver?.id === id && { backgroundColor: colors.light_primary },
       ]}
-      onPress={() => setSelectedDriverId(id)}
+      onPress={() => setSelectedDriver(driver)}
     >
       <Image source={{ uri: profile_image_url }} style={styles.avatar} />
 

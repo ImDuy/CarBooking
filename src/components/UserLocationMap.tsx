@@ -48,7 +48,7 @@ export default function UserLocationMap({ containerStyle }: Props) {
     ));
   return (
     <MapView
-      region={region}
+      initialRegion={region}
       style={[styles.container, containerStyle]}
       mapType="mutedStandard"
       showsPointsOfInterest={false}
